@@ -3,10 +3,11 @@ import { AppLayout } from './components/util/AppLayout';
 import AppIcon from './assets/regend.png';
 import AppIconDark from './assets/regend-dark.png';
 import { MonacoEditor } from './components/util/MonacoEditor';
-import { Col, Row, Typography } from 'antd';
+import { Button, Col, Drawer, Menu, Modal, Row, Typography } from 'antd';
 import { MyGraph } from './components/MyGraph';
 import { Dfa, str_to_dfa } from 'regend';
 import { Edge, Node } from 'vis-network';
+import { useWindowHeight, useWindowSize } from '@react-hook/window-size';
 
 const HEADER_HEIGHT = 64;
 
@@ -119,7 +120,10 @@ function App() {
     isDarkMode ? graphThemeDark : graphThemeLight,
   );
 
-  const [regexStr, setRegexStr] = useState('(a|b)*');
+  const [regexStr, setRegexStr] = useState('(aa|ab)*');
+  const [regexHelpOpen, setRegexHelpOpen] = useState(false);
+
+  const [windowWidth, windowHeight] = useWindowSize();
 
   const handleChangeTheme = (b: boolean) => {
     setIsDarkMode(b);
@@ -149,10 +153,28 @@ function App() {
       headerHeight={HEADER_HEIGHT}
       defaultIsDarkMode={isDarkMode}
       onChangeTheme={handleChangeTheme}
+      menubar={
+        <Menu
+          items={[
+            {
+              label: '正規表現の文法について',
+              key: 'helpRegex',
+            },
+          ]}
+          mode="horizontal"
+          selectable={false}
+          theme={isDarkMode ? 'dark' : 'light'}
+          onClick={({ key }: { key: string }) => {
+            if (key === 'helpRegex') {
+              setRegexHelpOpen(true);
+            }
+          }}
+        />
+      }
     >
       <Row wrap={false} style={{ flexDirection: 'column', flexGrow: 1 }}>
         <Col flex="none">
-          <Typography>正規表現を入力</Typography>
+          <Typography>正規表現を入力:</Typography>
           <MonacoEditor
             isDarkMode={isDarkMode}
             text={regexStr}
@@ -162,9 +184,82 @@ function App() {
           />
         </Col>
         <Col flex="auto">
+          <Typography>DFA (ノードをドラッグして動かせる):</Typography>
           <MyGraph nodes={nodes} edges={edges} />
         </Col>
       </Row>
+
+      <Drawer
+        placement={windowHeight > windowWidth ? 'bottom' : 'right'}
+        open={regexHelpOpen}
+        onClose={() => setRegexHelpOpen(false)}
+        maskStyle={{ background: 'transparent', display: 'none' }}
+        height={Math.min(500, windowHeight - HEADER_HEIGHT - 50)}
+      >
+        <Typography.Title level={2}>正規表現の文法</Typography.Title>
+        <Typography.Paragraph>
+          Regendで使用する正規表現の文法は以下の通りです。
+          <pre>{`<expr> := <orterm> [ '|' <orterm> ]*
+<orterm> := <catterm> [ <catterm> ]*
+<catterm> := <repterm> [ '*' ]?
+<repterm> := '(' <expr> ')'
+           | '0'～'9'
+           | 'a'～'z'
+           | 'A'～'Z'
+           | 'φ'
+`}</pre>
+          空白や改行は無視されるので読みやすいように好きな場所に入れることができます。
+        </Typography.Paragraph>
+        <Typography.Title level={2}> 正規表現の意味論</Typography.Title>
+
+        <Typography.Paragraph>
+          <ul>
+            <li>
+              <Typography.Text code>φ</Typography.Text> - 空文字列を表す
+            </li>
+            <li>
+              <Typography.Text code>0</Typography.Text>～
+              <Typography.Text code>9</Typography.Text>,{' '}
+              <Typography.Text code>a</Typography.Text>～
+              <Typography.Text code>z</Typography.Text>,{' '}
+              <Typography.Text code>A</Typography.Text>～
+              <Typography.Text code>Z</Typography.Text> - その1文字を表す
+            </li>
+            <li>
+              A<Typography.Text code>|</Typography.Text>B -
+              正規表現Aと正規表現Bの選択
+            </li>
+            <li> AB - 正規表現Aと正規表現Bの連接</li>
+            <li>
+              A<Typography.Text code>*</Typography.Text> -
+              正規表現Aの0回以上の繰り返し
+            </li>
+          </ul>
+        </Typography.Paragraph>
+        <Typography.Paragraph>
+          優先順位は繰り返し、連接、選択の順に高いです。
+          <Typography.Text code>(</Typography.Text>
+          <Typography.Text code>)</Typography.Text>
+          を使用すると優先順位を変えることができます。
+        </Typography.Paragraph>
+
+        <Typography.Paragraph>
+          以下のようなよくある糖衣構文は実装していません。かわりに矢印で示した表記を使ってください。
+          <ul>
+            <li>
+              A<Typography.Text code>?</Typography.Text> -
+              正規表現Aが0回または1回出現する →{' '}
+              <Typography.Text code>(φ|</Typography.Text>A
+              <Typography.Text code>)</Typography.Text>
+            </li>
+            <li>
+              A<Typography.Text code>+</Typography.Text> -
+              正規表現Aの1回以上の繰り返し → AA
+              <Typography.Text code>*</Typography.Text>
+            </li>
+          </ul>
+        </Typography.Paragraph>
+      </Drawer>
     </AppLayout>
   );
 }

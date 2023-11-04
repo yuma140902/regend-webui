@@ -1,5 +1,5 @@
-import { Button, ConfigProvider, Layout, Modal, theme } from 'antd';
-import { ReactNode, useState } from 'react';
+import { Button, ConfigProvider, Layout, Menu, Modal, theme } from 'antd';
+import { ReactElement, ReactNode, useState } from 'react';
 import './AppLayout.css';
 import { Header } from './app_layout/Header';
 import { AboutApp } from './app_layout/AboutApp';
@@ -14,6 +14,7 @@ type Props = {
   headerHeight: number;
   children?: ReactNode;
   defaultIsDarkMode?: boolean;
+  menubar?: ReactElement<typeof Menu>;
   onChangeTheme?: (isDarkMode: boolean) => void;
 };
 
@@ -30,6 +31,7 @@ export function AppLayout({
   headerHeight,
   children,
   defaultIsDarkMode,
+  menubar,
   onChangeTheme,
 }: Props) {
   const [isDarkMode, setIsDarkMode] = useState(defaultIsDarkMode ?? false);
@@ -62,7 +64,7 @@ export function AppLayout({
           appName={appName}
           handleOpenAboutDialog={handleOpenAboutDialog}
           githubUrl={`https://github.com/${appGithubRepo}`}
-          menubar={undefined}
+          menubar={menubar}
           onChangeTheme={onChangeTheme}
         />
         <Layout.Content style={{ display: 'flex', width: '100%' }}>
