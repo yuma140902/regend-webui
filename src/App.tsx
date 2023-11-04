@@ -96,7 +96,7 @@ function dfa_to_graph(dfa: Dfa, theme: GraphTheme): [Node[], Edge[]] {
       id: edge_count,
       from: rule.from,
       to: rule.to,
-      label: rule.alphabet.toString(),
+      label: rule.alphabets.split('').join(','),
       color: theme.edgeColor,
       font: {
         color: theme.edgeLabelColor,
