@@ -54,7 +54,6 @@ function dfa_to_graph(dfa: Dfa, theme: GraphTheme): [Node[], Edge[]] {
   });
 
   for (const state of dfa_states) {
-    const ty = state.id == dfa_start ? 'start' : state.finish ? 'fin' : 'cont';
     const node: Node = {
       id: state.id,
       label: state.id.toString(),
@@ -68,7 +67,7 @@ function dfa_to_graph(dfa: Dfa, theme: GraphTheme): [Node[], Edge[]] {
       font: {
         color: theme.nodeLabelColor,
       },
-      borderWidth: ty == 'fin' ? 4 : 1,
+      borderWidth: state.finish ? 4 : 1,
       borderWidthSelected: undefined,
     };
     nodes.push(node);
