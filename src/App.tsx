@@ -76,7 +76,14 @@ function App() {
       appIconDark={AppIconDark}
       appVersion={`${__COMMIT_ID__} (${__GIT_BRANCH__} ブランチ)`}
       appGithubRepo="yuma140902/regend-webui"
-      appDescription="正規表現をNFA・DFAに変換"
+      appDescription={
+        <Typography.Text>
+          <Typography.Link href="https://github.com/yuma140902/regend">
+            regend
+          </Typography.Link>
+          を用いて正規表現をDFAに変換する
+        </Typography.Text>
+      }
       headerHeight={HEADER_HEIGHT}
       defaultIsDarkMode={theme === 'dark'}
       onChangeTheme={handleChangeTheme}
@@ -90,7 +97,7 @@ function App() {
           ]}
           mode="horizontal"
           selectable={false}
-          theme={theme}
+          theme={theme === 'dark' ? 'dark' : 'light'}
           onClick={({ key }: { key: string }) => {
             if (key === 'helpRegex') {
               setRegexHelpOpen(true);

@@ -1,12 +1,13 @@
 import { GithubFilled } from '@ant-design/icons';
 import { Result, Typography } from 'antd';
+import { ReactElement } from 'react';
 
 type Props = {
   appIcon: string;
   appName: string;
   githubRepo: string;
   version: string;
-  description: string;
+  description: string | ReactElement;
 };
 
 /**

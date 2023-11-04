@@ -10,7 +10,7 @@ type Props = {
   appIconDark?: string;
   appVersion: string;
   appGithubRepo: string;
-  appDescription: string;
+  appDescription: string | ReactElement;
   headerHeight: number;
   children?: ReactNode;
   defaultIsDarkMode?: boolean;
