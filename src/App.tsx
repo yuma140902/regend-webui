@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { AppLayout } from './components/util/AppLayout';
+import AppIcon from './assets/regend.png';
+import AppIconDark from './assets/regend-dark.png';
+import { MonacoEditor } from './components/util/MonacoEditor';
+import { Typography } from 'antd';
+
+const HEADER_HEIGHT = 64;
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <AppLayout
+      appName="Regend WebUI"
+      appIcon={AppIcon}
+      appIconDark={AppIconDark}
+      appVersion={`${__COMMIT_ID__} (${__GIT_BRANCH__} ブランチ)`}
+      appGithubRepo="yuma140902/regend-webui"
+      appDescription="正規表現をNFA・DFAに変換"
+      headerHeight={HEADER_HEIGHT}
+      defaultIsDarkMode={isDarkMode}
+      onChangeTheme={setIsDarkMode}
+    >
+      <Typography>正規表現を入力</Typography>
+      <MonacoEditor isDarkMode={isDarkMode} />
+    </AppLayout>
+  );
 }
 
-export default App
+export default App;
