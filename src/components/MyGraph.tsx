@@ -8,8 +8,8 @@ const GraphConfig = {
       typeText: 'None',
       shapeId: '#empty', // relates to the type property of a node
       shape: (
-        <symbol viewBox="0 0 100 100" id="empty" key="0">
-          <circle cx="50" cy="50" r="45"></circle>
+        <symbol viewBox="0 0 50 50" id="empty" key="0">
+          <circle cx="25" cy="25" r="22.5"></circle>
         </symbol>
       ),
     },
