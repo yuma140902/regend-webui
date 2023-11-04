@@ -10,6 +10,7 @@ const branch = child.execSync('git rev-parse --abbrev-ref HEAD').toString();
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/regend-webui/',
   plugins: [
     react(),
     wasm(),
