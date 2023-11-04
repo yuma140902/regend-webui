@@ -1,15 +1,34 @@
 import { useState } from 'react';
-import { GraphView } from 'react-digraph';
+import { GraphView, IEdge, INode } from 'react-digraph-18';
 
 const GraphConfig = {
   NodeTypes: {
-    empty: {
+    start: {
       // required to show empty nodes
-      typeText: 'None',
+      typeText: 'Start',
       shapeId: '#empty', // relates to the type property of a node
       shape: (
         <symbol viewBox="0 0 50 50" id="empty" key="0">
           <circle cx="25" cy="25" r="22.5"></circle>
+        </symbol>
+      ),
+    },
+    cont: {
+      // required to show empty nodes
+      typeText: 'State',
+      shapeId: '#empty', // relates to the type property of a node
+      shape: (
+        <symbol viewBox="0 0 50 50" id="empty" key="0">
+          <circle cx="25" cy="25" r="22.5"></circle>
+        </symbol>
+      ),
+    },
+    fin: {
+      typeText: 'Finish',
+      shapeId: '#empty', // relates to the type property of a node
+      shape: (
+        <symbol viewBox="0 0 50 50" id="empty" key="0">
+          <circle cx="5" cy="5" r="22.5"></circle>
         </symbol>
       ),
     },
@@ -77,16 +96,7 @@ const sample = {
   ],
 };
 
-export function MyGraph(props: {}) {
-  const [state, setState] = useState({
-    graph: sample,
-    selected: null,
-  });
-
-  const nodes = state.graph.nodes;
-  const edges = state.graph.edges;
-  const selected = state.selected;
-
+export function MyGraph(props: { nodes: INode[]; edges: IEdge[] }) {
   const NodeTypes = GraphConfig.NodeTypes;
   const NodeSubtypes = GraphConfig.NodeSubtypes;
   const EdgeTypes = GraphConfig.EdgeTypes;
@@ -94,9 +104,9 @@ export function MyGraph(props: {}) {
   return (
     <GraphView
       nodeKey={NODE_KEY}
-      nodes={nodes}
-      edges={edges}
-      selected={selected}
+      nodes={props.nodes}
+      edges={props.edges}
+      selected={null}
       nodeTypes={NodeTypes}
       nodeSubtypes={NodeSubtypes}
       edgeTypes={EdgeTypes}
