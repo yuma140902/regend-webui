@@ -3,11 +3,11 @@ import { AppLayout } from './components/util/AppLayout';
 import AppIcon from './assets/regend.png';
 import AppIconDark from './assets/regend-dark.png';
 import { MonacoEditor } from './components/util/MonacoEditor';
-import { Button, Col, Drawer, Menu, Modal, Row, Typography } from 'antd';
+import { Col, Drawer, Menu, Row, Typography } from 'antd';
 import { MyGraph } from './components/MyGraph';
-import { Dfa, str_to_dfa } from 'regend';
+import { str_to_dfa } from 'regend';
 import { Edge, Node } from 'vis-network';
-import { useWindowHeight, useWindowSize } from '@react-hook/window-size';
+import { useWindowSize } from '@react-hook/window-size';
 import { RegexHelp } from './components/RegexHelp';
 import { GraphTheme, dfa_to_graph } from './dfa_to_graph';
 
