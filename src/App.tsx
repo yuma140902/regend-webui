@@ -44,7 +44,7 @@ function App() {
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
   const [graphTheme, setGraphTheme] = useState(
-    theme ? graphThemeDark : graphThemeLight,
+    theme === 'dark' ? graphThemeDark : graphThemeLight,
   );
 
   const [regexStr, setRegexStr] = useLocalStorage(
