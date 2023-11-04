@@ -1,0 +1,3 @@
+[submodule "regend"]
+	path = regend
+	url = https://github.com/yuma140902/regend
