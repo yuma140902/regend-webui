@@ -5,6 +5,7 @@ import AppIconDark from './assets/regend-dark.png';
 import { MonacoEditor } from './components/util/MonacoEditor';
 import { Col, Row, Typography } from 'antd';
 import { MyGraph } from './components/MyGraph';
+import { str_to_dfa } from 'regend';
 
 const HEADER_HEIGHT = 64;
 

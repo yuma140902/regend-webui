@@ -34,6 +34,9 @@ dependencies:
   react-dom:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
+  regend:
+    specifier: file:./regend/pkg
+    version: file:regend/pkg
 
 devDependencies:
   '@types/node':
@@ -3120,3 +3123,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  file:regend/pkg:
+    resolution: {directory: regend/pkg, type: directory}
+    name: regend
+    dev: false
