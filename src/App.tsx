@@ -10,17 +10,37 @@ import { Edge, Node } from 'vis-network';
 
 const HEADER_HEIGHT = 64;
 
-function get_node_position(count: number, max: number): [number, number] {
-  const x0 = 500;
-  const y0 = 500;
-  const r = 450;
-  const rad = (2 * Math.PI * (count - 1)) / max;
-  const x = x0 + r * Math.cos(rad);
-  const y = y0 + r * Math.sin(rad);
-  return [x, y];
-}
+const graphThemeLight: GraphTheme = {
+  bgColor: 'transparent',
+  nodeColor: '#97c2fc',
+  nodeBorderColor: '#2b7ce9',
+  nodeLabelColor: 'black',
+  nodeHighlightColor: '#d2e5ff',
+  edgeColor: '#2b7ce9',
+  edgeLabelColor: 'black',
+};
 
-function dfa_to_graph(dfa: Dfa): [Node[], Edge[]] {
+const graphThemeDark: GraphTheme = {
+  bgColor: 'transparent',
+  nodeColor: '#97c2fc',
+  nodeBorderColor: '#2b7ce9',
+  nodeLabelColor: 'black',
+  nodeHighlightColor: '#d2e5ff',
+  edgeColor: '#2b7ce9',
+  edgeLabelColor: 'white',
+};
+
+export type GraphTheme = {
+  bgColor: string;
+  nodeColor: string;
+  nodeBorderColor: string;
+  nodeLabelColor: string;
+  nodeHighlightColor: string;
+  edgeColor: string;
+  edgeLabelColor: string;
+};
+
+function dfa_to_graph(dfa: Dfa, theme: GraphTheme): [Node[], Edge[]] {
   const nodes: Node[] = [];
   const edges: Edge[] = [];
 
@@ -28,27 +48,63 @@ function dfa_to_graph(dfa: Dfa): [Node[], Edge[]] {
   const dfa_rules = dfa.rules;
   const dfa_start = dfa.start;
 
-  let node_count = 0;
-  const node_max = dfa_states.length;
+  nodes.push({
+    id: 0,
+    color: 'transparent',
+  });
+
   for (const state of dfa_states) {
-    ++node_count;
     const ty = state.id == dfa_start ? 'start' : state.finish ? 'fin' : 'cont';
-    const [x, y] = get_node_position(node_count, node_max);
-    const node = {
+    const node: Node = {
       id: state.id,
       label: state.id.toString(),
+      color: {
+        background: theme.nodeColor,
+        border: theme.nodeBorderColor,
+        highlight: {
+          background: theme.nodeHighlightColor,
+        },
+      },
+      font: {
+        color: theme.nodeLabelColor,
+      },
+      borderWidth: ty == 'fin' ? 4 : 1,
+      borderWidthSelected: undefined,
     };
     nodes.push(node);
   }
 
+  edges.push({
+    id: 0,
+    from: 0,
+    to: dfa_start,
+    label: 'Start',
+    color: theme.edgeColor,
+    font: {
+      color: theme.edgeLabelColor,
+      strokeWidth: 0,
+    },
+    arrows: {
+      to: true,
+    },
+  });
+
   let edge_count = 0;
   for (const rule of dfa_rules) {
     ++edge_count;
-    const edge = {
+    const edge: Edge = {
       id: edge_count,
       from: rule.from,
       to: rule.to,
       label: rule.alphabet.toString(),
+      color: theme.edgeColor,
+      font: {
+        color: theme.edgeLabelColor,
+        strokeWidth: 0,
+      },
+      arrows: {
+        to: true,
+      },
     };
     edges.push(edge);
   }
@@ -60,27 +116,28 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
+  const [graphTheme, setGraphTheme] = useState(
+    isDarkMode ? graphThemeDark : graphThemeLight,
+  );
 
   const [regexStr, setRegexStr] = useState('(a|b)*');
 
-  const handleRegexStrUpdate = (s?: string) => {
-    if (s) {
-      setRegexStr(s);
-      const dfa = str_to_dfa(s);
-      console.log(s);
-      console.log(dfa);
-      const [nodes, edges] = dfa_to_graph(dfa);
-      dfa.free();
-      setNodes(nodes);
-      setEdges(edges);
-    } else {
-      console.log('empty');
-    }
+  const handleChangeTheme = (b: boolean) => {
+    setIsDarkMode(b);
+    setGraphTheme(b ? graphThemeDark : graphThemeLight);
   };
 
   useEffect(() => {
-    handleRegexStrUpdate(regexStr);
-  }, []);
+    if (regexStr) {
+      try {
+        const dfa = str_to_dfa(regexStr);
+        const [nodes, edges] = dfa_to_graph(dfa, graphTheme);
+        dfa.free();
+        setNodes(nodes);
+        setEdges(edges);
+      } catch (e) {}
+    }
+  }, [graphTheme, regexStr]);
 
   return (
     <AppLayout
@@ -92,7 +149,7 @@ function App() {
       appDescription="正規表現をNFA・DFAに変換"
       headerHeight={HEADER_HEIGHT}
       defaultIsDarkMode={isDarkMode}
-      onChangeTheme={setIsDarkMode}
+      onChangeTheme={handleChangeTheme}
     >
       <Row wrap={false} style={{ flexDirection: 'column', flexGrow: 1 }}>
         <Col flex="none">
@@ -100,7 +157,9 @@ function App() {
           <MonacoEditor
             isDarkMode={isDarkMode}
             text={regexStr}
-            onChange={handleRegexStrUpdate}
+            onChange={(s) => {
+              if (s) setRegexStr(s);
+            }}
           />
         </Col>
         <Col flex="auto">
