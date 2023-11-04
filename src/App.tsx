@@ -3,7 +3,8 @@ import { AppLayout } from './components/util/AppLayout';
 import AppIcon from './assets/regend.png';
 import AppIconDark from './assets/regend-dark.png';
 import { MonacoEditor } from './components/util/MonacoEditor';
-import { Typography } from 'antd';
+import { Col, Row, Typography } from 'antd';
+import { MyGraph } from './components/MyGraph';
 
 const HEADER_HEIGHT = 64;
 
@@ -22,8 +23,15 @@ function App() {
       defaultIsDarkMode={isDarkMode}
       onChangeTheme={setIsDarkMode}
     >
-      <Typography>正規表現を入力</Typography>
-      <MonacoEditor isDarkMode={isDarkMode} />
+      <Row wrap={false} style={{ flexDirection: 'column', flexGrow: 1 }}>
+        <Col flex="none">
+          <Typography>正規表現を入力</Typography>
+          <MonacoEditor isDarkMode={isDarkMode} />
+        </Col>
+        <Col flex="auto">
+          <MyGraph />
+        </Col>
+      </Row>
     </AppLayout>
   );
 }

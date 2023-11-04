@@ -65,7 +65,9 @@ export function AppLayout({
           menubar={undefined}
           onChangeTheme={onChangeTheme}
         />
-        <Layout.Content>{children}</Layout.Content>
+        <Layout.Content style={{ display: 'flex', width: '100%' }}>
+          {children}
+        </Layout.Content>
       </Layout>
       <Modal
         open={isAboutDialogOpen}
