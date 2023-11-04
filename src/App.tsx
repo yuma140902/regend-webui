@@ -10,6 +10,7 @@ import { Edge, Node } from 'vis-network';
 import { useWindowSize } from '@react-hook/window-size';
 import { RegexHelp } from './components/RegexHelp';
 import { GraphTheme, dfa_to_graph } from './dfa_to_graph';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 const HEADER_HEIGHT = 64;
 
@@ -41,7 +42,7 @@ function App() {
     isDarkMode ? graphThemeDark : graphThemeLight,
   );
 
-  const [regexStr, setRegexStr] = useState('(aa|ab)*');
+  const [regexStr, setRegexStr] = useLocalStorage('regex', '(aa|ab)*');
   const [regexHelpOpen, setRegexHelpOpen] = useState(false);
 
   const [windowWidth, windowHeight] = useWindowSize();
