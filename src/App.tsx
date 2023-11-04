@@ -35,11 +35,16 @@ const graphThemeDark: GraphTheme = {
 };
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [theme, setTheme] = useLocalStorage(
+    'theme',
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light',
+  );
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
   const [graphTheme, setGraphTheme] = useState(
-    isDarkMode ? graphThemeDark : graphThemeLight,
+    theme ? graphThemeDark : graphThemeLight,
   );
 
   const [regexStr, setRegexStr] = useLocalStorage('regex', '(aa|ab)*');
@@ -47,9 +52,9 @@ function App() {
 
   const [windowWidth, windowHeight] = useWindowSize();
 
-  const handleChangeTheme = (b: boolean) => {
-    setIsDarkMode(b);
-    setGraphTheme(b ? graphThemeDark : graphThemeLight);
+  const handleChangeTheme = (isDarkMode: boolean) => {
+    setTheme(isDarkMode ? 'dark' : 'light');
+    setGraphTheme(isDarkMode ? graphThemeDark : graphThemeLight);
   };
 
   useEffect(() => {
@@ -73,7 +78,7 @@ function App() {
       appGithubRepo="yuma140902/regend-webui"
       appDescription="正規表現をNFA・DFAに変換"
       headerHeight={HEADER_HEIGHT}
-      defaultIsDarkMode={isDarkMode}
+      defaultIsDarkMode={theme === 'dark'}
       onChangeTheme={handleChangeTheme}
       menubar={
         <Menu
@@ -85,7 +90,7 @@ function App() {
           ]}
           mode="horizontal"
           selectable={false}
-          theme={isDarkMode ? 'dark' : 'light'}
+          theme={theme}
           onClick={({ key }: { key: string }) => {
             if (key === 'helpRegex') {
               setRegexHelpOpen(true);
@@ -98,7 +103,7 @@ function App() {
         <Col flex="none">
           <Typography>正規表現を入力:</Typography>
           <MonacoEditor
-            isDarkMode={isDarkMode}
+            isDarkMode={theme === 'dark'}
             text={regexStr}
             onChange={(s) => {
               if (s) setRegexStr(s);
