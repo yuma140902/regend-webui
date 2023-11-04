@@ -36,7 +36,7 @@ const graphThemeDark: GraphTheme = {
 
 function App() {
   const [theme, setTheme] = useLocalStorage(
-    'theme',
+    'regend-webui-theme',
     window.matchMedia('(prefers-color-scheme: dark)').matches
       ? 'dark'
       : 'light',
@@ -47,7 +47,10 @@ function App() {
     theme ? graphThemeDark : graphThemeLight,
   );
 
-  const [regexStr, setRegexStr] = useLocalStorage('regex', '(aa|ab)*');
+  const [regexStr, setRegexStr] = useLocalStorage(
+    'regend-webui-regex',
+    '(aa|ab)*',
+  );
   const [regexHelpOpen, setRegexHelpOpen] = useState(false);
 
   const [windowWidth, windowHeight] = useWindowSize();
