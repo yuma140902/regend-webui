@@ -6,7 +6,7 @@ import { MonacoEditor } from './components/util/MonacoEditor';
 import { Col, Row, Typography } from 'antd';
 import { MyGraph } from './components/MyGraph';
 import { Dfa, str_to_dfa } from 'regend';
-import { IEdge, INode } from 'react-digraph-18';
+import { Edge, Node } from 'vis-network';
 
 const HEADER_HEIGHT = 64;
 
@@ -20,9 +20,9 @@ function get_node_position(count: number, max: number): [number, number] {
   return [x, y];
 }
 
-function dfa_to_graph(dfa: Dfa): [INode[], IEdge[]] {
-  const nodes: INode[] = [];
-  const edges: IEdge[] = [];
+function dfa_to_graph(dfa: Dfa): [Node[], Edge[]] {
+  const nodes: Node[] = [];
+  const edges: Edge[] = [];
 
   const dfa_states = dfa.states;
   const dfa_rules = dfa.rules;
@@ -32,23 +32,23 @@ function dfa_to_graph(dfa: Dfa): [INode[], IEdge[]] {
   const node_max = dfa_states.length;
   for (const state of dfa_states) {
     ++node_count;
+    const ty = state.id == dfa_start ? 'start' : state.finish ? 'fin' : 'cont';
     const [x, y] = get_node_position(node_count, node_max);
     const node = {
       id: state.id,
-      title: state.id.toString(),
-      x,
-      y,
-      type: state.id == dfa_start ? 'start' : state.finish ? 'fin' : 'cont',
+      label: state.id.toString(),
     };
     nodes.push(node);
   }
 
+  let edge_count = 0;
   for (const rule of dfa_rules) {
+    ++edge_count;
     const edge = {
-      source: rule.from.toString(),
-      target: rule.to.toString(),
-      type: 'emptyEdge',
-      handleText: rule.alphabet.toString(),
+      id: edge_count,
+      from: rule.from,
+      to: rule.to,
+      label: rule.alphabet.toString(),
     };
     edges.push(edge);
   }
@@ -58,8 +58,8 @@ function dfa_to_graph(dfa: Dfa): [INode[], IEdge[]] {
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [nodes, setNodes] = useState<INode[]>([]);
-  const [edges, setEdges] = useState<IEdge[]>([]);
+  const [nodes, setNodes] = useState<Node[]>([]);
+  const [edges, setEdges] = useState<Edge[]>([]);
 
   const [regexStr, setRegexStr] = useState('(a|b)*');
 
