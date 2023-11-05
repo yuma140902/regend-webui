@@ -40,7 +40,7 @@ jobs:
       - name: Build regend
         run: |
           cd regend
-          npx wasm-pack build
+          npx wasm-pack build --release
           cd ..
       - name: Install dependencies
         run: npm install
