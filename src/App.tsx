@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AppLayout } from './components/util/AppLayout';
-import AppIcon from './assets/regend.png';
-import AppIconDark from './assets/regend-dark.png';
+import AppLogoLight from './assets/logo-light.png';
+import AppLogoDark from './assets/logo-dark.png';
 import { MonacoEditor } from './components/util/MonacoEditor';
 import { Col, Drawer, Menu, Row, Typography } from 'antd';
 import { MyGraph } from './components/MyGraph';
@@ -68,20 +68,23 @@ function App() {
         dfa.free();
         setNodes(nodes);
         setEdges(edges);
-      } catch (e) { }
+      } catch (e) {}
     }
   }, [graphTheme, regexStr]);
 
   return (
     <AppLayout
       appName="Regend WebUI"
-      appIcon={AppIcon}
-      appIconDark={AppIconDark}
+      appIcon={theme === 'dark' ? AppLogoDark : AppLogoLight}
+      appIconForHeader={theme === 'dark' ? AppLogoDark : AppLogoLight}
       appVersion={`${__COMMIT_ID__} (${__GIT_BRANCH__} ブランチ)`}
       appGithubRepo="yuma140902/regend-webui"
       appDescription={
         <Typography.Text>
-          <Typography.Link href="https://github.com/yuma140902/regend" target='_blank'>
+          <Typography.Link
+            href="https://github.com/yuma140902/regend"
+            target="_blank"
+          >
             regend
           </Typography.Link>
           を用いて正規表現をDFAに変換する

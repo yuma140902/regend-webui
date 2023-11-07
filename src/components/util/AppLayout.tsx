@@ -7,7 +7,8 @@ import { AboutApp } from './app_layout/AboutApp';
 type Props = {
   appName: string;
   appIcon: string;
-  appIconDark?: string;
+  appIconForAboutPage?: string;
+  appIconForHeader?: string;
   appVersion: string;
   appGithubRepo: string;
   appDescription: string | ReactElement;
@@ -24,7 +25,8 @@ type Props = {
 export function AppLayout({
   appName,
   appIcon,
-  appIconDark,
+  appIconForAboutPage,
+  appIconForHeader,
   appVersion,
   appGithubRepo,
   appDescription,
@@ -60,8 +62,8 @@ export function AppLayout({
           height={headerHeight}
           isDarkMode={isDarkMode}
           setIsDarkMode={setIsDarkMode}
-          appIcon={isDarkMode && appIconDark ? appIconDark : appIcon}
-          appName={appName}
+          appIcon={appIconForHeader ?? appIcon}
+          appName={appIconForHeader ? '' : appName}
           handleOpenAboutDialog={handleOpenAboutDialog}
           githubUrl={`https://github.com/${appGithubRepo}`}
           menubar={menubar}
@@ -83,7 +85,7 @@ export function AppLayout({
         }
       >
         <AboutApp
-          appIcon={isDarkMode && appIconDark ? appIconDark : appIcon}
+          appIcon={appIconForAboutPage ?? appIcon}
           appName={appName}
           githubRepo={appGithubRepo}
           version={appVersion}

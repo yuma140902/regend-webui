@@ -16,16 +16,18 @@ export function AppTitle({ handleClick, appIcon, appName, height }: Props) {
 
   return (
     <>
-      <a href="#" role="button" onClick={handleClick}>
-        <img
-          src={appIcon}
-          height={height}
-          style={{
-            marginLeft: '10px',
-            marginRight: '10px',
-          }}
-        />
-      </a>
+      {appIcon && (
+        <a href="#" role="button" onClick={handleClick}>
+          <img
+            src={appIcon}
+            height={height}
+            style={{
+              marginLeft: '10px',
+              marginRight: '10px',
+            }}
+          />
+        </a>
+      )}
       <a href="#" role="button" onClick={handleClick}>
         <Space>
           <Typography.Text hidden={windowWidth < 500} strong>
