@@ -51,7 +51,6 @@ export function Header({
         appIcon={appIcon}
         appName={appName}
       />
-      {'　'}
       {menubar}
       <Space style={{ float: 'right', marginLeft: 'auto' }}>
         <Tooltip title="テーマ" placement="bottom">

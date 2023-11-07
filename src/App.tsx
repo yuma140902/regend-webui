@@ -100,6 +100,10 @@ function App() {
               label: '正規表現の文法について',
               key: 'helpRegex',
             },
+            {
+              label: 'アプリ一覧',
+              key: 'apps',
+            },
           ]}
           mode="horizontal"
           selectable={false}
@@ -107,6 +111,8 @@ function App() {
           onClick={({ key }: { key: string }) => {
             if (key === 'helpRegex') {
               setRegexHelpOpen(true);
+            } else if (key === 'apps') {
+              window.open('https://yuma14.net/apps/', '_blank');
             }
           }}
         />
