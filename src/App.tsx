@@ -87,7 +87,7 @@ function App() {
           >
             regend
           </Typography.Link>
-          を用いて正規表現をDFAに変換する
+          を用いて正規表現をDFA(決定性有限オートマトン)に変換する
         </Typography.Text>
       }
       headerHeight={HEADER_HEIGHT}
