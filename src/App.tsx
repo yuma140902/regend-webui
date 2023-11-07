@@ -73,6 +73,11 @@ function App() {
     }
   }, [graphTheme, regexStr]);
 
+  // dirty hack
+  useEffect(() => {
+    setNodes(nodes.slice());
+  }, [windowWidth, windowHeight]);
+
   return (
     <AppLayout
       appName="Regend WebUI"
