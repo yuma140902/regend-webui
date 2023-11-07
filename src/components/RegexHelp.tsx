@@ -22,7 +22,7 @@ export function RegexHelp() {
       <Typography.Paragraph>
         <ul>
           <li>
-            <Typography.Text code>φ</Typography.Text> - 空文字列を表す
+            <Typography.Text code>φ</Typography.Text> - 何も受理しない
           </li>
           <li>
             <Typography.Text code>0</Typography.Text>～
@@ -52,11 +52,16 @@ export function RegexHelp() {
 
       <Typography.Paragraph>
         以下のようなよくある糖衣構文は実装していません。かわりに矢印で示した表記を使ってください。
+      </Typography.Paragraph>
+      <Typography.Paragraph>
         <ul>
+          <li>
+            空文字列 →<Typography.Text code>φ*</Typography.Text>
+          </li>
           <li>
             A<Typography.Text code>?</Typography.Text> -
             正規表現Aが0回または1回出現する →{' '}
-            <Typography.Text code>(φ|</Typography.Text>A
+            <Typography.Text code>(φ*|</Typography.Text>A
             <Typography.Text code>)</Typography.Text>
           </li>
           <li>
