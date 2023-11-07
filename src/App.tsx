@@ -68,7 +68,7 @@ function App() {
         dfa.free();
         setNodes(nodes);
         setEdges(edges);
-      } catch (e) {}
+      } catch (e) { }
     }
   }, [graphTheme, regexStr]);
 
@@ -81,7 +81,7 @@ function App() {
       appGithubRepo="yuma140902/regend-webui"
       appDescription={
         <Typography.Text>
-          <Typography.Link href="https://github.com/yuma140902/regend">
+          <Typography.Link href="https://github.com/yuma140902/regend" target='_blank'>
             regend
           </Typography.Link>
           を用いて正規表現をDFAに変換する
