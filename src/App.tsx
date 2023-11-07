@@ -11,6 +11,7 @@ import { useWindowSize } from '@react-hook/window-size';
 import { RegexHelp } from './components/RegexHelp';
 import { GraphTheme, dfa_to_graph } from './dfa_to_graph';
 import { useLocalStorage } from './hooks/useLocalStorage';
+import { MenuOutlined } from '@ant-design/icons';
 
 const HEADER_HEIGHT = 64;
 
@@ -95,6 +96,8 @@ function App() {
       onChangeTheme={handleChangeTheme}
       menubar={
         <Menu
+          style={{ width: 'auto', maxWidth: '50vw' }}
+          overflowedIndicator={<MenuOutlined />}
           items={[
             {
               label: '正規表現の文法について',
