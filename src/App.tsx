@@ -71,12 +71,7 @@ function App() {
         setEdges(edges);
       } catch (e) {}
     }
-  }, [graphTheme, regexStr]);
-
-  // dirty hack
-  useEffect(() => {
-    setNodes(nodes.slice());
-  }, [windowWidth, windowHeight]);
+  }, [graphTheme, regexStr, windowWidth, windowHeight]);
 
   return (
     <AppLayout
