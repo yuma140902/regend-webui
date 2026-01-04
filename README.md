@@ -10,7 +10,7 @@
 git clone https://github.com/yuma140902/regend-webui --recursive
 cd regend-webui
 cd regend
-npx wasm-pack build
+pnpm dlx wasm-pack build
 cd ..
-npm install
+pnpm install
 ```
