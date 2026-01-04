@@ -1,5 +1,5 @@
 import { Select, Typography } from 'antd';
-import { JSX } from 'react';
+import type { JSX } from 'react';
 
 export type RichSelectorOption<T> = {
   value: T;

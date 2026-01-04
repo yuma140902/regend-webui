@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Edge, Network, Node } from 'vis-network';
+import { type Edge, Network, type Node } from 'vis-network';
 
 export function MyGraph(props: { nodes: Node[]; edges: Edge[] }) {
   const visRef = useRef<HTMLDivElement>(null!);
