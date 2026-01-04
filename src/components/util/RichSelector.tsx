@@ -3,7 +3,7 @@ import type { JSX } from 'react';
 
 export type RichSelectorOption<T> = {
   value: T;
-  title: JSX.Element | string;
+  title: string;
   label: JSX.Element | string;
 };
 
@@ -14,7 +14,7 @@ type Props<T> = {
   options: RichSelectorOption<T>[];
 };
 
-export function RichSelector<T>({
+export function RichSelector<T extends string | number | null>({
   title,
   defaultValue,
   handleChange,
@@ -22,7 +22,7 @@ export function RichSelector<T>({
 }: Props<T>) {
   return (
     <>
-      <Typography.Text>{title + ': '}</Typography.Text>
+      <Typography.Text>{`${title}: `}</Typography.Text>
       <Select
         style={{ minWidth: 300 }}
         defaultValue={defaultValue}
