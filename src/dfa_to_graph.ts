@@ -1,5 +1,5 @@
-import { Dfa } from 'regend';
-import { Node, Edge } from 'vis-network';
+import type { Dfa } from 'regend';
+import type { Edge, Node } from 'vis-network';
 
 export type GraphTheme = {
   bgColor: string;

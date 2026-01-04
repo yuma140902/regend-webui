@@ -1,6 +1,6 @@
 import { GithubFilled } from '@ant-design/icons';
 import { Result, Typography } from 'antd';
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
 type Props = {
   appIcon: string;

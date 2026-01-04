@@ -1,6 +1,6 @@
 import { Editor } from '@monaco-editor/react';
 import { Spin } from 'antd';
-import { editor } from 'monaco-editor';
+import type { editor } from 'monaco-editor';
 import { useState } from 'react';
 
 export function MonacoEditor(props: {

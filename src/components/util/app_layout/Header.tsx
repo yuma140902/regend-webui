@@ -1,5 +1,5 @@
-import { Layout, Menu, Space, Switch, Tooltip, theme } from 'antd';
-import { ReactElement } from 'react';
+import { Layout, type Menu, Space, Switch, Tooltip, theme } from 'antd';
+import type { ReactElement } from 'react';
 import { AppTitle } from './AppTitle';
 import { GitHubLink } from './GitHubLink';
 

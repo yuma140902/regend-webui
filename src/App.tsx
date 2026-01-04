@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
-import { AppLayout } from './components/util/AppLayout';
-import AppLogoLight from './assets/logo-light.png';
-import AppLogoDark from './assets/logo-dark.png';
-import { MonacoEditor } from './components/util/MonacoEditor';
-import { Col, Drawer, Menu, Row, Typography } from 'antd';
-import { MyGraph } from './components/MyGraph';
-import { str_to_dfa } from 'regend';
-import { Edge, Node } from 'vis-network';
-import { useWindowSize } from '@react-hook/window-size';
-import { RegexHelp } from './components/RegexHelp';
-import { GraphTheme, dfa_to_graph } from './dfa_to_graph';
-import { useLocalStorage } from './hooks/useLocalStorage';
 import { MenuOutlined } from '@ant-design/icons';
+import { useWindowSize } from '@react-hook/window-size';
+import { Col, Drawer, Menu, Row, Typography } from 'antd';
+import { useEffect, useState } from 'react';
+import { str_to_dfa } from 'regend';
+import type { Edge, Node } from 'vis-network';
+import AppLogoDark from './assets/logo-dark.png';
+import AppLogoLight from './assets/logo-light.png';
+import { MyGraph } from './components/MyGraph';
+import { RegexHelp } from './components/RegexHelp';
+import { AppLayout } from './components/util/AppLayout';
+import { MonacoEditor } from './components/util/MonacoEditor';
+import { type GraphTheme, dfa_to_graph } from './dfa_to_graph';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 const HEADER_HEIGHT = 64;
 
